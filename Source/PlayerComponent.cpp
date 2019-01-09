@@ -172,6 +172,9 @@ void PlayerComponent::buttonClicked (Button* buttonThatWasClicked)
     if (buttonThatWasClicked == prevButton.get())
     {
         //[UserButtonCode_prevButton] -- add your button handler code here..
+        browser->getSampler()->stop();
+        browser->selectPreviousFile();
+        browser->getSampler()->play();
         //[/UserButtonCode_prevButton]
     }
     else if (buttonThatWasClicked == rewindButton.get())
@@ -184,6 +187,7 @@ void PlayerComponent::buttonClicked (Button* buttonThatWasClicked)
     {
         //[UserButtonCode_stopButton] -- add your button handler code here..
         browser->getSampler()->stop();
+        playerRunning = false;
 
         //[/UserButtonCode_stopButton]
     }
@@ -192,6 +196,7 @@ void PlayerComponent::buttonClicked (Button* buttonThatWasClicked)
         //[UserButtonCode_playButton] -- add your button handler code here..
         if (browser->getSelectedFile() != nullptr) {
             browser->getSampler()->play();
+            playerRunning = true;
         }
         //[/UserButtonCode_playButton]
     }
@@ -204,6 +209,9 @@ void PlayerComponent::buttonClicked (Button* buttonThatWasClicked)
     else if (buttonThatWasClicked == nextButton.get())
     {
         //[UserButtonCode_nextButton] -- add your button handler code here..
+        browser->getSampler()->stop();
+        browser->selectNextFile();
+        browser->getSampler()->play();
         //[/UserButtonCode_nextButton]
     }
 
@@ -244,6 +252,12 @@ void PlayerComponent::timerCallback() {
 
         timeSlider->setValue(s->getCurrentPosition());
     }
+    else {
+        if (playerRunning) {
+            browser->selectNextFile();
+        }
+    }
+    
 }
 
 void PlayerComponent::sliderValueChanged(Slider *slider) {

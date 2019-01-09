@@ -96,35 +96,7 @@ void ExtendedFileBrowser::changeListenerCallback (ChangeBroadcaster* source) {
 }
 
 void ExtendedFileBrowser::mouseDown(const juce::MouseEvent &event) {
-    if (table->getSelectedRow() > 0) {
-        File* f = new File(model->getDirectoryList()->getFile(table->getSelectedRow()));
-        if (f->exists()) {
-            if (!f->isDirectory()) {
-    
-                if (sampler != nullptr) {
-                    delete sampler;
-                }
-                
-                AudioIODevice*  device = AudioManager::getInstance()->getDeviceManager()->getCurrentAudioDevice();
-                
-                sampler = new Sampler(device->getCurrentSampleRate(),device->getDefaultBufferSize());
-                
-                if (f->getFileExtension().toLowerCase().contains("wav") ||
-                    f->getFileExtension().toLowerCase().contains("aif") ||
-                    f->getFileExtension().toLowerCase().contains("aiff") ||
-                    f->getFileExtension().toLowerCase().contains("mp3") ||
-                    f->getFileExtension().toLowerCase().contains("ogg")) {
-                    sampler->stop();
-                    sampler->loadSample(*f);
-                    sampler->play();
-                    selectedFile = f;
-                    sendChangeMessage();
-                }
-            }
-            
-        }
-        delete f;
-    }
+
 
 }
 
@@ -137,8 +109,9 @@ void ExtendedFileBrowser::mouseDoubleClick(const juce::MouseEvent &event) {
                 model->setCurrentDir(f);
             }
             else {
-                selectedFile = f;
-                sendChangeMessage();
+                if (table->getSelectedRow() > 0) {
+                    playFile(table->getSelectedRow());
+                }
             }
         }
     }
@@ -151,8 +124,60 @@ void ExtendedFileBrowser::mouseDoubleClick(const juce::MouseEvent &event) {
 
 }
 
+void ExtendedFileBrowser::selectNextFile() {
+    int row = table->getSelectedRow();
+
+    if (row < table->getNumRows() - 1) {
+        row++;
+        table->selectRow(row);
+        playFile(row);
+    }
+}
+
+void ExtendedFileBrowser::selectPreviousFile() {
+    int row = table->getSelectedRow();
+    
+    if (row > 0) {
+        row--;
+        table->selectRow(row);
+        playFile(row);
+    }
+}
+
 void ExtendedFileBrowser::timerCallback() {
    
+}
+
+void ExtendedFileBrowser::playFile(int row) {
+    File* f = new File(model->getDirectoryList()->getFile(row));
+    if (f->exists()) {
+        if (!f->isDirectory()) {
+            
+            if (sampler != nullptr) {
+                delete sampler;
+            }
+            
+            AudioIODevice*  device = AudioManager::getInstance()->getDeviceManager()->getCurrentAudioDevice();
+            
+            sampler = new Sampler(device->getCurrentSampleRate(),device->getDefaultBufferSize());
+         
+            
+            if (f->getFileExtension().toLowerCase().contains("wav") ||
+                f->getFileExtension().toLowerCase().contains("aif") ||
+                f->getFileExtension().toLowerCase().contains("aiff") ||
+                f->getFileExtension().toLowerCase().contains("mp3") ||
+                f->getFileExtension().toLowerCase().contains("ogg")) {
+                sampler->stop();
+                sampler->loadSample(*f);
+                // sampler->setPitch(44100.0f/48000.0f);
+                sampler->play();
+                selectedFile = f;
+                sendChangeMessage();
+            }
+        }
+        
+    }
+    delete f;
 }
 
 //===========================================================================
@@ -184,7 +209,7 @@ void FileBrowserModel::paintCell (Graphics& g,
             text = directoryList->getFile(rowNumber).getFileName();
         }
         else {
-            text = "[..]";
+            text = "[up]";
         }
         g.setColour(juce::Colours::white);
         g.drawText(text, 0,0, width,height, juce::Justification::centredLeft);

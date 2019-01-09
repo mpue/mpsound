@@ -27,8 +27,8 @@ Sampler::Sampler(float sampleRate, int bufferSize) {
     this->interpolatorRight = new CatmullRomInterpolator();
     this->sampleBuffer = new AudioSampleBuffer(2,16384*1024);
     this->samplerEnvelope = new ADSR();
-    this->samplerEnvelope->setAttackRate(0.1 * sampleRate);
-    this->samplerEnvelope->setReleaseRate(0.3 * sampleRate);
+    this->samplerEnvelope->setAttackRate(1.5 * sampleRate);
+    this->samplerEnvelope->setReleaseRate(1.5 * sampleRate);
 }
 
 Sampler::~Sampler() {
@@ -111,10 +111,11 @@ float Sampler::getSampleAt(int channel, long pos){
 
 void Sampler::loadSample(File file) {
     AudioFormatReader* reader = manager->createReaderFor(file);
+    
     if (reader == nullptr) {
         return;
     }
-    
+	
     ScopedPointer<AudioFormatReaderSource> afr = new AudioFormatReaderSource(reader, true);
     
     if (sampleBuffer != nullptr) {
@@ -126,16 +127,18 @@ void Sampler::loadSample(File file) {
     if (tempBufferRight != nullptr) {
         delete tempBufferRight;
     }
-    
+   
     sampleBuffer = new AudioSampleBuffer(2, static_cast<int>(reader->lengthInSamples));
     this->tempBufferLeft = new float[reader->lengthInSamples * 2];
     this->tempBufferRight = new float[reader->lengthInSamples * 2];
     reader->read(sampleBuffer, 0, static_cast<int>(reader->lengthInSamples), 0, true, true);
+    Logger::getCurrentLogger()->writeToLog("Sample rate : "+String(reader->sampleRate));
     sampleLength = reader->lengthInSamples;
     endPosition = sampleLength;
     startPosition = 0;
     currentSample = 0;
     loaded = true;
+    setPitch(reader->sampleRate / sampleRate);
     reader = nullptr;
 }
 
@@ -158,6 +161,7 @@ void Sampler::loadSample(InputStream* input) {
     this->tempBufferRight = new float[reader->lengthInSamples * 2];
     
     reader->read(sampleBuffer, 0, static_cast<int>(reader->lengthInSamples), 0, true, true);
+    // sampleRate = reader->sampleRate;
     sampleLength = reader->lengthInSamples;
     endPosition = sampleLength;
     startPosition = 0;
@@ -220,10 +224,6 @@ void Sampler::setPitch(float pitch) {
     }
 
 }
-
-
-
-
 
 bool Sampler::isLoop() {
     return this->loop;

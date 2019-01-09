@@ -82,6 +82,7 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     ExtendedFileBrowser* browser;
     Slider* timeSlider;
+    bool playerRunning = false;
     //[/UserVariables]
 
     //==============================================================================

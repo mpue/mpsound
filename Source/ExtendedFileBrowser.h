@@ -75,6 +75,10 @@ public:
         return model;
     }
     
+    void selectNextFile();
+    void selectPreviousFile();
+    void playFile(int row);
+    
     virtual void timerCallback() override;
     
     Sampler* getSampler() {

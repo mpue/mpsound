@@ -73,10 +73,12 @@ public:
             setResizable (true, true);
 
             centreWithSize (getWidth(), getHeight());
+            loadState();
             setVisible (true);
         }
         
         ~MainWindow() {
+            saveState();
             setLookAndFeel(nullptr);
             delete lf;
         }
@@ -95,6 +97,70 @@ public:
            you really have to override any DocumentWindow methods, make sure your
            subclass also calls the superclass's method.
         */
+        
+        /*
+        void resized() override {
+            saveState();
+        }
+         */
+        
+        void saveState(){
+            String userHome = File::getSpecialLocation(File::userHomeDirectory).getFullPathName();
+            File appDir = File(userHome+"/.Synthlab");
+            
+            if (!appDir.exists()) {
+                appDir.createDirectory();
+            }
+            
+            File configFile = File(userHome+"/.Synthlab/window.xml");
+            
+            if (!configFile.exists()) {
+                configFile.create();
+            }
+            else {
+                configFile.deleteFile();
+                configFile = File(userHome+"/.Synthlab/window.xml");
+            }
+            
+            ValueTree* v = new ValueTree("SavedState");
+            
+            ValueTree child = ValueTree("Properties");
+            child.setProperty("state",getWindowStateAsString(), nullptr);
+            v->addChild(child, -1, nullptr);
+            
+            OutputStream* os = configFile.createOutputStream();
+            
+            XmlElement* xml = v->createXml();
+            
+            xml->writeToStream(*os, "");
+            
+            delete os;
+            delete xml;
+            delete v;
+        }
+        
+        void loadState() {
+            String userHome = File::getSpecialLocation(File::userHomeDirectory).getFullPathName();
+            
+            File appDir = File(userHome+"/.Synthlab");
+            
+            if (!appDir.exists()) {
+                appDir.createDirectory();
+            }
+            
+            File configFile = File(userHome+"/.Synthlab/window.xml");
+            
+            if (configFile.exists()) {
+                ScopedPointer<XmlElement> xml = XmlDocument(configFile).getDocumentElement();
+                ValueTree v = ValueTree::fromXml(*xml.get());
+                
+                if (v.getNumChildren() > 0) {
+                    String state = v.getChild(0).getProperty("state");
+                    restoreWindowStateFromString(state);
+                }
+                xml = nullptr;
+            }
+        }
 
     private:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
