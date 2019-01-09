@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="nIArHw" name="mpsound" projectType="guiapp" jucerVersion="5.3.2">
+  <MAINGROUP id="jZpwzK" name="mpsound">
+    <GROUP id="{662C4A0D-4D57-449F-7890-47CD1BC7DECC}" name="images">
+      <FILE id="zBeyQ8" name="Fader.png" compile="0" resource="1" file="images/Fader.png"/>
+      <FILE id="TMto6k" name="foundation-icon-fonts_2015-02-16_fast-forward_64_0_000000_none.png"
+            compile="0" resource="1" file="images/foundation-icon-fonts_2015-02-16_fast-forward_64_0_000000_none.png"/>
+      <FILE id="WYoMay" name="foundation-icon-fonts_2015-02-16_next_64_0_000000_none.png"
+            compile="0" resource="1" file="images/foundation-icon-fonts_2015-02-16_next_64_0_000000_none.png"/>
+      <FILE id="SDnx9u" name="foundation-icon-fonts_2015-02-16_play_64_0_000000_none.png"
+            compile="0" resource="1" file="images/foundation-icon-fonts_2015-02-16_play_64_0_000000_none.png"/>
+      <FILE id="wKSJUu" name="foundation-icon-fonts_2015-02-16_previous_64_0_000000_none.png"
+            compile="0" resource="1" file="images/foundation-icon-fonts_2015-02-16_previous_64_0_000000_none.png"/>
+      <FILE id="aNvYSe" name="foundation-icon-fonts_2015-02-16_record_64_0_000000_none.png"
+            compile="0" resource="1" file="images/foundation-icon-fonts_2015-02-16_record_64_0_000000_none.png"/>
+      <FILE id="TSeglE" name="foundation-icon-fonts_2015-02-16_rewind_64_0_000000_none.png"
+            compile="0" resource="1" file="images/foundation-icon-fonts_2015-02-16_rewind_64_0_000000_none.png"/>
+      <FILE id="j1bJjr" name="foundation-icon-fonts_2015-02-16_stop_64_0_000000_none.png"
+            compile="0" resource="1" file="images/foundation-icon-fonts_2015-02-16_stop_64_0_000000_none.png"/>
+      <FILE id="Svxd2T" name="ionicons_2-0-1_search_64_0_000000_none.png"
+            compile="0" resource="1" file="images/ionicons_2-0-1_search_64_0_000000_none.png"/>
+      <FILE id="WH1rId" name="Knob_64.png" compile="0" resource="1" file="images/Knob_64.png"/>
+    </GROUP>
+    <GROUP id="{CA2577F6-523E-EB5A-D4EB-213E560B4434}" name="Source">
+      <FILE id="CLmfho" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/CustomLookAndFeel.cpp"/>
+      <FILE id="itfKLd" name="CustomLookAndFeel.h" compile="0" resource="0"
+            file="Source/CustomLookAndFeel.h"/>
+      <FILE id="KCA84Q" name="PlayerComponent.cpp" compile="1" resource="0"
+            file="Source/PlayerComponent.cpp"/>
+      <FILE id="xtLV6E" name="PlayerComponent.h" compile="0" resource="0"
+            file="Source/PlayerComponent.h"/>
+      <FILE id="Ya1wQK" name="ADSR.cpp" compile="1" resource="0" file="Source/ADSR.cpp"/>
+      <FILE id="tsoxer" name="ADSR.h" compile="0" resource="0" file="Source/ADSR.h"/>
+      <FILE id="xizqij" name="AudioManager.cpp" compile="1" resource="0"
+            file="Source/AudioManager.cpp"/>
+      <FILE id="fmRvrP" name="AudioManager.h" compile="0" resource="0" file="Source/AudioManager.h"/>
+      <FILE id="yX1huc" name="ExtendedFileBrowser.cpp" compile="1" resource="0"
+            file="Source/ExtendedFileBrowser.cpp"/>
+      <FILE id="E4DZjm" name="ExtendedFileBrowser.h" compile="0" resource="0"
+            file="Source/ExtendedFileBrowser.h"/>
+      <FILE id="AyRDwy" name="Modulator.h" compile="0" resource="0" file="Source/Modulator.h"/>
+      <FILE id="Sgn3SJ" name="Sampler.cpp" compile="1" resource="0" file="Source/Sampler.cpp"/>
+      <FILE id="L3fcc7" name="Sampler.h" compile="0" resource="0" file="Source/Sampler.h"/>
+      <FILE id="CWJZZ2" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="Hgm8i6" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="o3ce4p" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+  <LIVE_SETTINGS>
+    <OSX/>
+  </LIVE_SETTINGS>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
