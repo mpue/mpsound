@@ -20,6 +20,7 @@
 //[Headers] You can add your own extra header files here...
 #include "ExtendedFileBrowser.h"
 #include "AudioManager.h"
+#include "CustomLookAndFeel.h"
 //[/Headers]
 
 #include "PlayerComponent.h"
@@ -32,6 +33,7 @@
 PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
 {
     //[Constructor_pre] You can add your own custom stuff here..
+    clf = new CustomLookAndFeel();
     //[/Constructor_pre]
 
     prevButton.reset (new ImageButton ("prevButton"));
@@ -40,7 +42,7 @@ PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
     prevButton->addListener (this);
 
     prevButton->setImages (false, true, true,
-                           ImageCache::getFromMemory (foundationiconfonts_20150216_previous_64_0_000000_none_png, foundationiconfonts_20150216_previous_64_0_000000_none_pngSize), 1.000f, Colour (0x00000000),
+                           ImageCache::getFromMemory (foundationiconfonts_20150216_previous_64_0_000000_none_png, foundationiconfonts_20150216_previous_64_0_000000_none_pngSize), 1.000f, Colour (0xff434343),
                            Image(), 1.000f, Colours::white,
                            Image(), 1.000f, Colour (0x00000000));
     prevButton->setBounds (8, 8, 32, 32);
@@ -51,7 +53,7 @@ PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
     rewindButton->addListener (this);
 
     rewindButton->setImages (false, true, true,
-                             ImageCache::getFromMemory (foundationiconfonts_20150216_rewind_64_0_000000_none_png, foundationiconfonts_20150216_rewind_64_0_000000_none_pngSize), 1.000f, Colour (0x00000000),
+                             ImageCache::getFromMemory (foundationiconfonts_20150216_rewind_64_0_000000_none_png, foundationiconfonts_20150216_rewind_64_0_000000_none_pngSize), 1.000f, Colour (0xff434343),
                              Image(), 1.000f, Colours::white,
                              Image(), 1.000f, Colour (0x00000000));
     rewindButton->setBounds (48, 8, 32, 32);
@@ -62,7 +64,7 @@ PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
     stopButton->addListener (this);
 
     stopButton->setImages (false, true, true,
-                           ImageCache::getFromMemory (foundationiconfonts_20150216_stop_64_0_000000_none_png, foundationiconfonts_20150216_stop_64_0_000000_none_pngSize), 1.000f, Colour (0x00000000),
+                           ImageCache::getFromMemory (foundationiconfonts_20150216_stop_64_0_000000_none_png, foundationiconfonts_20150216_stop_64_0_000000_none_pngSize), 1.000f, Colour (0xff434343),
                            Image(), 1.000f, Colours::white,
                            Image(), 1.000f, Colour (0x00000000));
     stopButton->setBounds (96, 8, 32, 32);
@@ -73,7 +75,7 @@ PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
     playButton->addListener (this);
 
     playButton->setImages (false, true, true,
-                           ImageCache::getFromMemory (foundationiconfonts_20150216_play_64_0_000000_none_png, foundationiconfonts_20150216_play_64_0_000000_none_pngSize), 1.000f, Colour (0x00000000),
+                           ImageCache::getFromMemory (foundationiconfonts_20150216_play_64_0_000000_none_png, foundationiconfonts_20150216_play_64_0_000000_none_pngSize), 1.000f, Colour (0xff434343),
                            Image(), 1.000f, Colours::white,
                            Image(), 1.000f, Colour (0x00000000));
     playButton->setBounds (144, 8, 32, 32);
@@ -84,7 +86,7 @@ PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
     forwardButton->addListener (this);
 
     forwardButton->setImages (false, true, true,
-                              ImageCache::getFromMemory (foundationiconfonts_20150216_fastforward_64_0_000000_none_png, foundationiconfonts_20150216_fastforward_64_0_000000_none_pngSize), 1.000f, Colour (0x00000000),
+                              ImageCache::getFromMemory (foundationiconfonts_20150216_fastforward_64_0_000000_none_png, foundationiconfonts_20150216_fastforward_64_0_000000_none_pngSize), 1.000f, Colour (0xff434343),
                               Image(), 1.000f, Colours::white,
                               Image(), 1.000f, Colour (0x00000000));
     forwardButton->setBounds (192, 8, 32, 32);
@@ -94,7 +96,7 @@ PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
     nextButton->addListener (this);
 
     nextButton->setImages (false, true, true,
-                           ImageCache::getFromMemory (foundationiconfonts_20150216_next_64_0_000000_none_png, foundationiconfonts_20150216_next_64_0_000000_none_pngSize), 1.000f, Colour (0x00000000),
+                           ImageCache::getFromMemory (foundationiconfonts_20150216_next_64_0_000000_none_png, foundationiconfonts_20150216_next_64_0_000000_none_pngSize), 1.000f, Colour (0xff434343),
                            Image(), 1.000f, Colours::white,
                            Image(), 1.000f, Colour (0x00000000));
     nextButton->setBounds (240, 8, 32, 32);
@@ -105,17 +107,39 @@ PlayerComponent::PlayerComponent (ExtendedFileBrowser* browser)
     timeLabel->setFont (Font (32.60f, Font::plain).withTypefaceStyle ("Bold"));
     timeLabel->setJustificationType (Justification::centredRight);
     timeLabel->setEditable (false, false, false);
-    timeLabel->setColour (Label::textColourId, Colours::black);
+    timeLabel->setColour (Label::textColourId, Colours::white);
     timeLabel->setColour (TextEditor::textColourId, Colours::black);
     timeLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    timeLabel->setBounds (312, 12, 80, 24);
+    timeLabel->setBounds (184, 48, 80, 24);
+
+    vuMeterLeft.reset (new Slider ("vuMeterLeft"));
+    addAndMakeVisible (vuMeterLeft.get());
+    vuMeterLeft->setRange (0, 10, 0);
+    vuMeterLeft->setSliderStyle (Slider::LinearBar);
+    vuMeterLeft->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
+    vuMeterLeft->addListener (this);
+
+    vuMeterLeft->setBounds (280, 12, 160, 8);
+
+    vuMeterRight.reset (new Slider ("vuMeterRight"));
+    addAndMakeVisible (vuMeterRight.get());
+    vuMeterRight->setRange (0, 10, 0);
+    vuMeterRight->setSliderStyle (Slider::LinearBar);
+    vuMeterRight->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
+    vuMeterRight->addListener (this);
+
+    vuMeterRight->setBounds (280, 24, 160, 8);
 
 
     //[UserPreSize]
+    vuMeterLeft->setLookAndFeel(clf);
+    vuMeterRight->setLookAndFeel(clf);
+    vuMeterLeft->setRange(0, 1.2f);
+    vuMeterRight->setRange(0, 1.2f);
     //[/UserPreSize]
 
-    setSize (400, 50);
+    setSize (450, 80);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -128,6 +152,9 @@ PlayerComponent::~PlayerComponent()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     stopTimer();
+    vuMeterRight->setLookAndFeel(nullptr);
+    vuMeterLeft->setLookAndFeel(nullptr);
+    delete clf;
     //[/Destructor_pre]
 
     prevButton = nullptr;
@@ -137,6 +164,8 @@ PlayerComponent::~PlayerComponent()
     forwardButton = nullptr;
     nextButton = nullptr;
     timeLabel = nullptr;
+    vuMeterLeft = nullptr;
+    vuMeterRight = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -219,9 +248,46 @@ void PlayerComponent::buttonClicked (Button* buttonThatWasClicked)
     //[/UserbuttonClicked_Post]
 }
 
+void PlayerComponent::sliderValueChanged (Slider* sliderThatWasMoved)
+{
+    //[UsersliderValueChanged_Pre]
+    //[/UsersliderValueChanged_Pre]
+
+    if (sliderThatWasMoved == vuMeterLeft.get())
+    {
+        //[UserSliderCode_vuMeterLeft] -- add your slider handling code here..
+        //[/UserSliderCode_vuMeterLeft]
+    }
+    else if (sliderThatWasMoved == vuMeterRight.get())
+    {
+        //[UserSliderCode_vuMeterRight] -- add your slider handling code here..
+        //[/UserSliderCode_vuMeterRight]
+    }
+
+    //[UsersliderValueChanged_Post]
+
+    else {
+         browser->getSampler()->setCurrentSample(sliderThatWasMoved->getValue());
+    }
+    //[/UsersliderValueChanged_Post]
+}
+
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+
+int PlayerComponent::useTimeSlice() {
+    /*
+    std::function<void(void)> changeLambda =
+    [=]() {
+        vuMeterLeft->setValue(browser->getSampler()->getMagnitude(0));
+        vuMeterRight->setValue(browser->getSampler()->getMagnitude(1));
+    };
+    juce::MessageManager::callAsync(changeLambda);
+     */
+    return 250;
+}
+
 
 void PlayerComponent::timerCallback() {
 
@@ -233,7 +299,9 @@ void PlayerComponent::timerCallback() {
         int bufferSize  = AudioManager::getInstance()->getDeviceManager()->getCurrentAudioDevice()->getDefaultBufferSize();
         int sampleRate  = AudioManager::getInstance()->getDeviceManager()->getCurrentAudioDevice()->getCurrentSampleRate();
 
-        long totalseconds = currentSample / sampleRate;
+        // float pitch = browser->getSampler()->getSampleRate() / sampleRate;
+
+        long totalseconds = (currentSample / s->getSampleRate());
         long minutes = totalseconds / 60;
 
         long seconds = totalseconds - minutes * 60;
@@ -251,18 +319,20 @@ void PlayerComponent::timerCallback() {
         timeLabel.get()->setText(time, NotificationType::dontSendNotification);
 
         timeSlider->setValue(s->getCurrentPosition());
+
     }
     else {
         if (playerRunning) {
             browser->selectNextFile();
+            vuMeterRight->setValue(0);
+            vuMeterLeft->setValue(0);
         }
     }
-    
+
+
+
 }
 
-void PlayerComponent::sliderValueChanged(Slider *slider) {
-    browser->getSampler()->setCurrentSample(slider->getValue());
-}
 //[/MiscUserCode]
 
 
@@ -276,59 +346,69 @@ void PlayerComponent::sliderValueChanged(Slider *slider) {
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="PlayerComponent" componentName=""
-                 parentClasses="public Component, public Timer, public Slider::Listener"
+                 parentClasses="public Component, public Timer, public TimeSliceClient"
                  constructorParams="ExtendedFileBrowser* browser" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="400" initialHeight="50">
+                 fixedSize="1" initialWidth="450" initialHeight="80">
   <BACKGROUND backgroundColour="ff909090"/>
   <IMAGEBUTTON name="prevButton" id="a68f3207d30dc0c" memberName="prevButton"
                virtualName="" explicitFocusOrder="0" pos="8 8 32 32" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="foundationiconfonts_20150216_previous_64_0_000000_none_png"
-               opacityNormal="1.00000000000000000000" colourNormal="0" resourceOver=""
-               opacityOver="1.00000000000000000000" colourOver="ffffffff" resourceDown=""
-               opacityDown="1.00000000000000000000" colourDown="0"/>
+               opacityNormal="1.00000000000000000000" colourNormal="ff434343"
+               resourceOver="" opacityOver="1.00000000000000000000" colourOver="ffffffff"
+               resourceDown="" opacityDown="1.00000000000000000000" colourDown="0"/>
   <IMAGEBUTTON name="rewindButton" id="78a7c9ec540d2953" memberName="rewindButton"
                virtualName="" explicitFocusOrder="0" pos="48 8 32 32" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="foundationiconfonts_20150216_rewind_64_0_000000_none_png"
-               opacityNormal="1.00000000000000000000" colourNormal="0" resourceOver=""
-               opacityOver="1.00000000000000000000" colourOver="ffffffff" resourceDown=""
-               opacityDown="1.00000000000000000000" colourDown="0"/>
+               opacityNormal="1.00000000000000000000" colourNormal="ff434343"
+               resourceOver="" opacityOver="1.00000000000000000000" colourOver="ffffffff"
+               resourceDown="" opacityDown="1.00000000000000000000" colourDown="0"/>
   <IMAGEBUTTON name="stopButton" id="94c502c12139cd9d" memberName="stopButton"
                virtualName="" explicitFocusOrder="0" pos="96 8 32 32" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="foundationiconfonts_20150216_stop_64_0_000000_none_png"
-               opacityNormal="1.00000000000000000000" colourNormal="0" resourceOver=""
-               opacityOver="1.00000000000000000000" colourOver="ffffffff" resourceDown=""
-               opacityDown="1.00000000000000000000" colourDown="0"/>
+               opacityNormal="1.00000000000000000000" colourNormal="ff434343"
+               resourceOver="" opacityOver="1.00000000000000000000" colourOver="ffffffff"
+               resourceDown="" opacityDown="1.00000000000000000000" colourDown="0"/>
   <IMAGEBUTTON name="playButton" id="306aea4436b69c03" memberName="playButton"
                virtualName="" explicitFocusOrder="0" pos="144 8 32 32" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="foundationiconfonts_20150216_play_64_0_000000_none_png"
-               opacityNormal="1.00000000000000000000" colourNormal="0" resourceOver=""
-               opacityOver="1.00000000000000000000" colourOver="ffffffff" resourceDown=""
-               opacityDown="1.00000000000000000000" colourDown="0"/>
+               opacityNormal="1.00000000000000000000" colourNormal="ff434343"
+               resourceOver="" opacityOver="1.00000000000000000000" colourOver="ffffffff"
+               resourceDown="" opacityDown="1.00000000000000000000" colourDown="0"/>
   <IMAGEBUTTON name="forwardButton" id="acb69f4fc693b0c9" memberName="forwardButton"
                virtualName="" explicitFocusOrder="0" pos="192 8 32 32" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="foundationiconfonts_20150216_fastforward_64_0_000000_none_png"
-               opacityNormal="1.00000000000000000000" colourNormal="0" resourceOver=""
-               opacityOver="1.00000000000000000000" colourOver="ffffffff" resourceDown=""
-               opacityDown="1.00000000000000000000" colourDown="0"/>
+               opacityNormal="1.00000000000000000000" colourNormal="ff434343"
+               resourceOver="" opacityOver="1.00000000000000000000" colourOver="ffffffff"
+               resourceDown="" opacityDown="1.00000000000000000000" colourDown="0"/>
   <IMAGEBUTTON name="new button" id="1d6b6452756f35c0" memberName="nextButton"
                virtualName="" explicitFocusOrder="0" pos="240 8 32 32" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="foundationiconfonts_20150216_next_64_0_000000_none_png"
-               opacityNormal="1.00000000000000000000" colourNormal="0" resourceOver=""
-               opacityOver="1.00000000000000000000" colourOver="ffffffff" resourceDown=""
-               opacityDown="1.00000000000000000000" colourDown="0"/>
+               opacityNormal="1.00000000000000000000" colourNormal="ff434343"
+               resourceOver="" opacityOver="1.00000000000000000000" colourOver="ffffffff"
+               resourceDown="" opacityDown="1.00000000000000000000" colourDown="0"/>
   <LABEL name="timeLabel" id="b2419f164399c401" memberName="timeLabel"
-         virtualName="" explicitFocusOrder="0" pos="312 12 80 24" textCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="184 48 80 24" textCol="ffffffff"
          edTextCol="ff000000" edBkgCol="0" labelText="0:00" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="32.60000000000000142109" kerning="0.00000000000000000000"
          bold="1" italic="0" justification="34" typefaceStyle="Bold"/>
+  <SLIDER name="vuMeterLeft" id="3a0991b71e203e6" memberName="vuMeterLeft"
+          virtualName="" explicitFocusOrder="0" pos="280 12 160 8" min="0.00000000000000000000"
+          max="10.00000000000000000000" int="0.00000000000000000000" style="LinearBar"
+          textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="80"
+          textBoxHeight="20" skewFactor="1.00000000000000000000" needsCallback="1"/>
+  <SLIDER name="vuMeterRight" id="f399f3485d8644f2" memberName="vuMeterRight"
+          virtualName="" explicitFocusOrder="0" pos="280 24 160 8" min="0.00000000000000000000"
+          max="10.00000000000000000000" int="0.00000000000000000000" style="LinearBar"
+          textBoxPos="NoTextBox" textBoxEditable="0" textBoxWidth="80"
+          textBoxHeight="20" skewFactor="1.00000000000000000000" needsCallback="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

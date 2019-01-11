@@ -10,6 +10,7 @@
 
 #include "Sampler.h"
 #include "AudioManager.h"
+#include "CDSPProcessor.h"
 
 using juce::CatmullRomInterpolator;
 using juce::AudioSampleBuffer;
@@ -20,6 +21,8 @@ using juce::AudioFormatReaderSource;
 using juce::InputStream;
 
 Sampler::Sampler(float sampleRate, int bufferSize) {
+    
+    Logger::getCurrentLogger()->writeToLog("Creating sample player with sample rate of " + String(sampleRate) + " kHz");
     this->sampleRate = sampleRate;
     this->bufferSize = bufferSize;
     this->manager = AudioManager::getInstance()->getFormatManager();
@@ -139,6 +142,7 @@ void Sampler::loadSample(File file) {
     currentSample = 0;
     loaded = true;
     setPitch(reader->sampleRate / sampleRate);
+    sampleRate = reader->sampleRate;
     reader = nullptr;
 }
 
@@ -161,7 +165,7 @@ void Sampler::loadSample(InputStream* input) {
     this->tempBufferRight = new float[reader->lengthInSamples * 2];
     
     reader->read(sampleBuffer, 0, static_cast<int>(reader->lengthInSamples), 0, true, true);
-    // sampleRate = reader->sampleRate;
+    sampleRate = reader->sampleRate;
     sampleLength = reader->lengthInSamples;
     endPosition = sampleLength;
     startPosition = 0;

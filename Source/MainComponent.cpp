@@ -11,8 +11,8 @@
 #include "AudioManager.h"
 
 //==============================================================================
-MainComponent::MainComponent() : TimeSliceThread("PropertyWatcher")
-{
+MainComponent::MainComponent() : TimeSliceThread("PropertyWatcher") {
+    
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (400, 400);
@@ -31,20 +31,26 @@ MainComponent::MainComponent() : TimeSliceThread("PropertyWatcher")
     browser  = new ExtendedFileBrowser(File::getSpecialLocation(File::userHomeDirectory),filter,model);
     directoryContents->addChangeListener(browser);
     startThread();
+    
+    dbbrowser = new DBBrowser();
+    
+    
     playerPanel = new PlayerComponent(browser);
     playerPanel->setTopLeftPosition(getWidth() / 2 - playerPanel->getWidth() / 2,0);
+    addTimeSliceClient(playerPanel);
     addAndMakeVisible(playerPanel);
     timeSlider = new Slider(Slider::LinearHorizontal, Slider::NoTextBox);
     timeSlider->setSize(getWidth(), 10);
     playerPanel->setSlider(timeSlider);
     browser->addChangeListener(this);
     addAndMakeVisible(timeSlider);
-    timeSlider->setTopLeftPosition(0 ,50);
+    timeSlider->setTopLeftPosition(0 ,80);
  
     tab = new TabbedComponent(TabbedButtonBar::Orientation::TabsAtTop);
     addAndMakeVisible(tab);
-    tab->setTopLeftPosition(5,60);
+    tab->setTopLeftPosition(5,90);
     tab->addTab("Browser",Colours::lightgrey, browser, true);
+    tab->addTab("Database",Colours::lightgrey, dbbrowser, true);
     //addAndMakeVisible(browser);
     resized();
 }
@@ -52,10 +58,12 @@ MainComponent::MainComponent() : TimeSliceThread("PropertyWatcher")
 MainComponent::~MainComponent()
 {
     removeTimeSliceClient(this);
+    removeTimeSliceClient(playerPanel);
     delete filter;
     delete directoryContents;
     browser->removeAllChangeListeners();
     delete browser;
+    delete dbbrowser;
     delete playerPanel;
     delete timeSlider;
     delete tab;
@@ -104,6 +112,24 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
         }
     }
     
+    if (dbbrowser != nullptr && dbbrowser->getSampler() != nullptr) {
+        
+        if (dbbrowser->getSampler()->isPlaying() && !dbbrowser->getSampler()->isDone()) {
+            
+            for (int i = 0; i < bufferToFill.numSamples;i++) {
+                
+                dbbrowser->getSampler()->nextSample();
+                
+                float left = dbbrowser->getSampler()->getCurrentSample(0);
+                float right = dbbrowser->getSampler()->getCurrentSample(1);
+                
+                bufferToFill.buffer->addSample(0, i, left);
+                bufferToFill.buffer->addSample(1, i, right);
+                
+            }
+        }
+    }
+    
 }
 
 void MainComponent::releaseResources()
@@ -129,7 +155,7 @@ void MainComponent::resized()
     // If you add any child components, this is where you should
     // update their positions.
     if (tab != nullptr) {
-        tab->setSize(getWidth() - 10, getHeight() - playerPanel->getHeight());
+        tab->setSize(getWidth() - 10, getHeight() - playerPanel->getHeight() - 20);
         tab->repaint();
         tab->resized();
         if (browser != nullptr) {

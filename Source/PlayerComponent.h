@@ -22,6 +22,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ExtendedFileBrowser.h"
+#include "CustomLookAndFeel.h"
 //[/Headers]
 
 
@@ -36,8 +37,9 @@
 */
 class PlayerComponent  : public Component,
                          public Timer,
-                         public Slider::Listener,
-                         public Button::Listener
+                         public TimeSliceClient,
+                         public Button::Listener,
+                         public Slider::Listener
 {
 public:
     //==============================================================================
@@ -50,14 +52,18 @@ public:
         this->timeSlider = slider;
         slider->addListener(this);
     }
-
-    virtual void sliderValueChanged (Slider* slider) override;
+    virtual int useTimeSlice() override;
     virtual void timerCallback() override;
+    void setPlaying(bool playing) {
+        this->playerRunning = playing;
+    }
+
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
     void buttonClicked (Button* buttonThatWasClicked) override;
+    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
     // Binary resources:
     static const char* foundationiconfonts_20150216_fastforward_64_0_000000_none_png;
@@ -83,6 +89,7 @@ private:
     ExtendedFileBrowser* browser;
     Slider* timeSlider;
     bool playerRunning = false;
+    CustomLookAndFeel* clf;
     //[/UserVariables]
 
     //==============================================================================
@@ -93,6 +100,8 @@ private:
     std::unique_ptr<ImageButton> forwardButton;
     std::unique_ptr<ImageButton> nextButton;
     std::unique_ptr<Label> timeLabel;
+    std::unique_ptr<Slider> vuMeterLeft;
+    std::unique_ptr<Slider> vuMeterRight;
 
 
     //==============================================================================

@@ -47,6 +47,10 @@ public:
         return currentSample;
     }
     
+    float getSampleRate() {
+        return sampleRate;
+    }
+    
     void setCurrentSample(long num) {
         currentSample = num;
     }
@@ -82,6 +86,13 @@ public:
 
     float getOutput(int channel) {
         return getCurrentSample(channel) * samplerEnvelope->process();
+    }
+    
+    float getMagnitude(int channel) {
+        if (currentSample < sampleLength)
+            return sampleBuffer->getMagnitude(channel, currentSample, bufferSize / 4);
+        else
+            return 0;
     }
     
 private:

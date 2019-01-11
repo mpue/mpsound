@@ -11,6 +11,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ExtendedFileBrowser.h"
 #include "PlayerComponent.h"
+#include "SQLiteWrapper.h"
+#include "DBBrowser.h"
 
 //==============================================================================
 /*
@@ -45,8 +47,10 @@ private:
     juce::DirectoryContentsList* directoryContents = nullptr;
     juce::WildcardFileFilter* filter = nullptr;
     ExtendedFileBrowser* browser = nullptr;
+    DBBrowser* dbbrowser = nullptr;
     PlayerComponent* playerPanel = nullptr;
     Slider* timeSlider = nullptr;
+
     virtual void changeListenerCallback (ChangeBroadcaster* source) override;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

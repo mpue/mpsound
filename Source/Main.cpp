@@ -68,7 +68,7 @@ public:
         {
             lf = new CustomLookAndFeel();
             setLookAndFeel(lf);
-            setUsingNativeTitleBar (true);
+            setUsingNativeTitleBar (false);
             setContentOwned (new MainComponent(), true);
             setResizable (true, true);
 
