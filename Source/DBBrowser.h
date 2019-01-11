@@ -72,18 +72,39 @@ public:
 
     }
     virtual int getNumRows() override {
-
         return fileList.size();
     }
 
-    void update() {
+    void loadData() {
         fileList.clear();
+        SQLiteWrapper::results.clear();
+        // sqlite->updateDB();
+        sqlite->query("select * from files");
+        
+        for(std::map<juce::String, juce::String>::iterator itr = SQLiteWrapper::results.begin(); itr != SQLiteWrapper::results.end(); itr++)
+        {
+            juce::String name = itr->first;
+            fileList.add(File(SQLiteWrapper::results[name]));
+        }
+    }
+    
+    void update() {
+        String userHome = File::getSpecialLocation(File::userHomeDirectory).getFullPathName();
+        
+        Logger::getCurrentLogger()->writeToLog("starting DB update");
+        sqlite->updateDB(userHome+"/Documents/samples");
+        
+        Logger::getCurrentLogger()->writeToLog("starting filelist update");
+        
+        fileList.clear();
+        SQLiteWrapper::results.clear();
         // sqlite->updateDB();
         sqlite->query("select * from files");
         
         for(std::map<juce::String, juce::String>::iterator itr = SQLiteWrapper::results.begin(); itr != SQLiteWrapper::results.end(); itr++)
         {            
             juce::String name = itr->first;
+            Logger::getCurrentLogger()->writeToLog("adding file "+SQLiteWrapper::results[name]);
             fileList.add(File(SQLiteWrapper::results[name]));
         }
         
@@ -93,8 +114,9 @@ public:
         
         if (name.length() > 0) {
             fileList.clear();
+            SQLiteWrapper::results.clear();
             // sqlite->updateDB();
-            sqlite->query("select * from files where name like %"+name+"%");
+            sqlite->query("select * from files where name like '%"+name+"%'");
             
             for(std::map<juce::String, juce::String>::iterator itr = SQLiteWrapper::results.begin(); itr != SQLiteWrapper::results.end(); itr++)
             {
@@ -103,7 +125,7 @@ public:
             }
         }
         else {
-            update();
+            loadData();
         }
         
 
@@ -133,7 +155,8 @@ private:
                                                                     //[/Comments]
 */
 class DBBrowser  : public Component,
-                   public Button::Listener
+                   public Button::Listener,
+                   public TextEditor::Listener
 {
 public:
     //==============================================================================
@@ -142,13 +165,16 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    
+    virtual void textEditorTextChanged (TextEditor& t) override;
+    Sampler* getSampler();
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
     void buttonClicked (Button* buttonThatWasClicked) override;
     void mouseDoubleClick(const juce::MouseEvent &event) override;
-    Sampler* getSampler();
+  
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.

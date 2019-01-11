@@ -74,12 +74,11 @@ bool SQLiteWrapper::createDatabase() {
 
 bool SQLiteWrapper::updateDB(String rootDir) {
     
-    // String userHome = File::getSpecialLocation(File::userHomeDirectory).getFullPathName();
-    
+    query("delete from files");
     
     File root = File(rootDir);
     
-    Array<File> files = root.findChildFiles(File::TypesOfFileToFind::findFiles,true, "*.wav;*.aiff;*.mp3");
+    Array<File> files = root.findChildFiles(File::TypesOfFileToFind::findFiles,true, "*.wav;*.aiff;*.mp3;*.aif;*.ogg;");
     
     for(int i = 0; i < files.size();i++) {
         String queryString = "insert into files values(\""+files.getReference(i).getFileName()+"\",\"" + files.getReference(i).getFullPathName()+"\")";

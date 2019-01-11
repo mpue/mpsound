@@ -75,9 +75,15 @@ DBBrowser::DBBrowser ()
     viewport->setTopLeftPosition(10,48);
     repaint();
     resized();
-    model->update();
+    model->loadData();
     table->updateContent();
+    textEditor->addListener(this);
     //[/Constructor]
+}
+
+void DBBrowser::textEditorTextChanged(TextEditor &t) {
+    model->filter(textEditor.get()->getText());
+    table->updateContent();
 }
 
 DBBrowser::~DBBrowser()
@@ -123,12 +129,13 @@ void DBBrowser::resized()
     
     if (viewport != nullptr) {
         viewport->setSize(getWidth() - 10, getHeight() - 64);
+        if (table !=  nullptr) {
+            table->setSize(viewport->getWidth(), viewport->getHeight());
+        }
+        
     }
     
-    if (table !=  nullptr) {
-        table->setSize(getWidth() - 30, getHeight() - 30);
-    }
-    
+
     //[/UserPreResize]
 
     //viewport->setBounds (16, 48, proportionOfWidth (0.9801f), proportionOfHeight (0.9800f));
