@@ -72,12 +72,12 @@ bool SQLiteWrapper::createDatabase() {
 }
 
 
-bool SQLiteWrapper::updateDB() {
+bool SQLiteWrapper::updateDB(String rootDir) {
     
-    String userHome = File::getSpecialLocation(File::userHomeDirectory).getFullPathName();
+    // String userHome = File::getSpecialLocation(File::userHomeDirectory).getFullPathName();
     
     
-    File root = File(userHome+"/Documents/samples");
+    File root = File(rootDir);
     
     Array<File> files = root.findChildFiles(File::TypesOfFileToFind::findFiles,true, "*.wav;*.aiff;*.mp3");
     

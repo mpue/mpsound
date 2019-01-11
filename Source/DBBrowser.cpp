@@ -91,6 +91,9 @@ DBBrowser::~DBBrowser()
 
 
     //[Destructor]. You can add your own custom destruction code here..
+    if (sampler != nullptr) {
+        delete sampler;
+    }
     //[/Destructor]
 }
 

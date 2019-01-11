@@ -77,21 +77,38 @@ public:
     }
 
     void update() {
+        fileList.clear();
         // sqlite->updateDB();
         sqlite->query("select * from files");
         
         for(std::map<juce::String, juce::String>::iterator itr = SQLiteWrapper::results.begin(); itr != SQLiteWrapper::results.end(); itr++)
-        {
-            
+        {            
             juce::String name = itr->first;
-            
-            // fileList.add(File(path));
-        
             fileList.add(File(SQLiteWrapper::results[name]));
         }
         
     }
 
+    void filter(String name) {
+        
+        if (name.length() > 0) {
+            fileList.clear();
+            // sqlite->updateDB();
+            sqlite->query("select * from files where name like %"+name+"%");
+            
+            for(std::map<juce::String, juce::String>::iterator itr = SQLiteWrapper::results.begin(); itr != SQLiteWrapper::results.end(); itr++)
+            {
+                juce::String name = itr->first;
+                fileList.add(File(SQLiteWrapper::results[name]));
+            }
+        }
+        else {
+            update();
+        }
+        
+
+    }
+    
     File getFile(int row) {
         return fileList.getReference(row);
     }

@@ -24,7 +24,7 @@ public:
     bool close();
     bool query(String query);
     bool createDatabase();
-    bool updateDB();
+    bool updateDB(String rootDir);
     static std::map<String,String> results;
 private:
     sqlite3 *db;
