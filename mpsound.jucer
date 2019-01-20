@@ -2,6 +2,9 @@
 
 <JUCERPROJECT id="nIArHw" name="mpsound" projectType="guiapp" jucerVersion="5.3.2">
   <MAINGROUP id="jZpwzK" name="mpsound">
+    <GROUP id="{E4C7BE01-724D-9A7A-9D77-AF8E28638E84}" name="fonts">
+      <FILE id="za9n38" name="DOTMATRI.TTF" compile="0" resource="1" file="fonts/DOTMATRI.TTF"/>
+    </GROUP>
     <GROUP id="{662C4A0D-4D57-449F-7890-47CD1BC7DECC}" name="images">
       <FILE id="zBeyQ8" name="Fader.png" compile="0" resource="1" file="images/Fader.png"/>
       <FILE id="TMto6k" name="foundation-icon-fonts_2015-02-16_fast-forward_64_0_000000_none.png"
@@ -23,6 +26,8 @@
       <FILE id="WH1rId" name="Knob_64.png" compile="0" resource="1" file="images/Knob_64.png"/>
     </GROUP>
     <GROUP id="{CA2577F6-523E-EB5A-D4EB-213E560B4434}" name="Source">
+      <FILE id="WYgE4c" name="LCDisplay.cpp" compile="1" resource="0" file="Source/LCDisplay.cpp"/>
+      <FILE id="F95NJ2" name="LCDisplay.h" compile="0" resource="0" file="Source/LCDisplay.h"/>
       <FILE id="YUA5ih" name="DBBrowser.cpp" compile="1" resource="0" file="Source/DBBrowser.cpp"/>
       <FILE id="LPaznI" name="DBBrowser.h" compile="0" resource="0" file="Source/DBBrowser.h"/>
       <FILE id="sH3Bjs" name="SQLiteWrapper.cpp" compile="1" resource="0"

@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   DOTMATRI_TTF;
+    const int            DOTMATRI_TTFSize = 45804;
+
     extern const char*   Fader_png;
     const int            Fader_pngSize = 19460;
 
@@ -39,7 +42,7 @@ namespace BinaryData
     const int            Knob_64_pngSize = 370323;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 10;
+    const int namedResourceListSize = 11;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

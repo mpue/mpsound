@@ -22,6 +22,7 @@
 		69CABEB69077FCB0DD64DFBE = {isa = PBXBuildFile; fileRef = C2DA668E06BD9BCEBA58C947; };
 		305A127E029ED88C9A5DAE08 = {isa = PBXBuildFile; fileRef = DB0A4B89E950D22AC50E1A22; };
 		A27199676C1BCCBA5A9E7792 = {isa = PBXBuildFile; fileRef = 839C8EE70C312CB48ED0C535; };
+		33756AFE21B50071B2AA60EC = {isa = PBXBuildFile; fileRef = 8B700B75B80E4288A33A0247; };
 		A0CB69699F3B6C32FEC30D73 = {isa = PBXBuildFile; fileRef = 868464424210F691AFB2B44E; };
 		82AF7D5A0F8C61AAC489B520 = {isa = PBXBuildFile; fileRef = 46A630F232B711836F42ACC8; };
 		6AE51903325B74F811168DBC = {isa = PBXBuildFile; fileRef = 1DDB0478271E3029E86CB5C1; };
@@ -74,6 +75,7 @@
 		390E2BFCEB87FDE8A6651D4F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = ../../Source/AudioManager.h; sourceTree = "SOURCE_ROOT"; };
 		3DA75A9D396DCB0994A28279 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_cryptography"; path = "../../../JUCE/modules/juce_cryptography"; sourceTree = "SOURCE_ROOT"; };
 		3E7AADD067F2FD35ECE4996D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Modulator.h; path = ../../Source/Modulator.h; sourceTree = "SOURCE_ROOT"; };
+		455182EA43D5448D72C1D8E4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LCDisplay.h; path = ../../Source/LCDisplay.h; sourceTree = "SOURCE_ROOT"; };
 		465935C8A4EE31E593620208 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_events"; path = "../../../JUCE/modules/juce_events"; sourceTree = "SOURCE_ROOT"; };
 		46A630F232B711836F42ACC8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SQLiteWrapper.cpp; path = ../../Source/SQLiteWrapper.cpp; sourceTree = "SOURCE_ROOT"; };
 		4C8D359BD1BAB033067EB1A1 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -105,6 +107,7 @@
 		868464424210F691AFB2B44E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DBBrowser.cpp; path = ../../Source/DBBrowser.cpp; sourceTree = "SOURCE_ROOT"; };
 		883038201D78163770BD786C = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		884A42C3738862A7F46F0F34 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_core.mm"; path = "../../JuceLibraryCode/include_juce_core.mm"; sourceTree = "SOURCE_ROOT"; };
+		8B700B75B80E4288A33A0247 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LCDisplay.cpp; path = ../../Source/LCDisplay.cpp; sourceTree = "SOURCE_ROOT"; };
 		8BFD3E85272C301AA406FE49 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = r8bbase.h; path = ../../Source/r8bbase.h; sourceTree = "SOURCE_ROOT"; };
 		96506B748ADCC381C96457B2 = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foundation-icon-fonts_2015-02-16_rewind_64_0_000000_none.png"; path = "../../images/foundation-icon-fonts_2015-02-16_rewind_64_0_000000_none.png"; sourceTree = "SOURCE_ROOT"; };
 		97668452E83146978B6FCF2A = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foundation-icon-fonts_2015-02-16_record_64_0_000000_none.png"; path = "../../images/foundation-icon-fonts_2015-02-16_record_64_0_000000_none.png"; sourceTree = "SOURCE_ROOT"; };
@@ -136,9 +139,12 @@
 		E1F66A7ABBB6327389679514 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Sampler.h; path = ../../Source/Sampler.h; sourceTree = "SOURCE_ROOT"; };
 		E77E231B4B8F6E899F0E7C7B = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foundation-icon-fonts_2015-02-16_next_64_0_000000_none.png"; path = "../../images/foundation-icon-fonts_2015-02-16_next_64_0_000000_none.png"; sourceTree = "SOURCE_ROOT"; };
 		EF1431A439FAA60C999A0EF9 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_opengl"; path = "../../../JUCE/modules/juce_opengl"; sourceTree = "SOURCE_ROOT"; };
+		EF23CE9C3B6A5DB3A7B0DF62 = {isa = PBXFileReference; lastKnownFileType = file.TTF; name = DOTMATRI.TTF; path = ../../fonts/DOTMATRI.TTF; sourceTree = "SOURCE_ROOT"; };
 		F080AB211B3DEE60D52DD5D4 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_basics"; path = "../../../JUCE/modules/juce_gui_basics"; sourceTree = "SOURCE_ROOT"; };
 		F13BAE6D5B34A6FCB1C0235D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_utils.mm"; path = "../../JuceLibraryCode/include_juce_audio_utils.mm"; sourceTree = "SOURCE_ROOT"; };
 		FF80F86DEB567A8CA7F3BE43 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		A7870E85A2163314FB0D1B6A = {isa = PBXGroup; children = (
+					EF23CE9C3B6A5DB3A7B0DF62, ); name = fonts; sourceTree = "<group>"; };
 		9241EF311AD387D687026D22 = {isa = PBXGroup; children = (
 					6B5809483102BC393E169D3E,
 					1B1ACD0D7C7046EEAD1CA500,
@@ -151,6 +157,8 @@
 					19E2FF3C9CCBC7E0E4859597,
 					ACDDB35BFE033D9A0DBC421A, ); name = images; sourceTree = "<group>"; };
 		9009294A0A31CDF1FAA0E255 = {isa = PBXGroup; children = (
+					8B700B75B80E4288A33A0247,
+					455182EA43D5448D72C1D8E4,
 					868464424210F691AFB2B44E,
 					7C34F3FF424580A83F4469E4,
 					46A630F232B711836F42ACC8,
@@ -184,6 +192,7 @@
 					788564A9840F7C5DF83FE554,
 					6BFD441041F6E5F16B847728, ); name = Source; sourceTree = "<group>"; };
 		AC8D750FE4C332739095C444 = {isa = PBXGroup; children = (
+					A7870E85A2163314FB0D1B6A,
 					9241EF311AD387D687026D22,
 					9009294A0A31CDF1FAA0E255, ); name = mpsound; sourceTree = "<group>"; };
 		3C52CAD23894C58D77AF9FFA = {isa = PBXGroup; children = (
@@ -399,6 +408,7 @@
 		064EEEF407A29A4B3E5963EA = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 					A27199676C1BCCBA5A9E7792, ); runOnlyForDeploymentPostprocessing = 0; };
 		DF4CB4F6E67A89F4BD03C165 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
+					33756AFE21B50071B2AA60EC,
 					A0CB69699F3B6C32FEC30D73,
 					82AF7D5A0F8C61AAC489B520,
 					6AE51903325B74F811168DBC,

@@ -81,11 +81,6 @@ DBBrowser::DBBrowser ()
     //[/Constructor]
 }
 
-void DBBrowser::textEditorTextChanged(TextEditor &t) {
-    model->filter(textEditor.get()->getText());
-    table->updateContent();
-}
-
 DBBrowser::~DBBrowser()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
@@ -103,17 +98,13 @@ DBBrowser::~DBBrowser()
     //[/Destructor]
 }
 
-void DBBrowser::mouseDoubleClick(const juce::MouseEvent &event) {
-    playSelectedFile();
-}
-
 //==============================================================================
 void DBBrowser::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
-    g.fillAll (Colour (0xff222222));
-    g.fillRect (getLocalBounds());
+
+    g.fillAll (Colour (0xff323e44));
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -126,19 +117,19 @@ void DBBrowser::resized()
         setSize(getParentWidth(), getParentHeight());
 
     }
-    
+
     if (viewport != nullptr) {
         viewport->setSize(getWidth() - 10, getHeight() - 64);
         if (table !=  nullptr) {
             table->setSize(viewport->getWidth(), viewport->getHeight());
         }
-        
+
     }
-    
+
 
     //[/UserPreResize]
 
-    //viewport->setBounds (16, 48, proportionOfWidth (0.9801f), proportionOfHeight (0.9800f));
+    viewport->setBounds (16, 48, proportionOfWidth (0.9801f), proportionOfHeight (0.9800f));
     //[UserResized] Add your own custom resize handling here..
 
     //[/UserResized]
@@ -167,12 +158,12 @@ void DBBrowser::buttonClicked (Button* buttonThatWasClicked)
 
 void DBBrowser::playSelectedFile() {
     AudioIODevice*  device = AudioManager::getInstance()->getDeviceManager()->getCurrentAudioDevice();
-    
+
     if (sampler != nullptr) {
         sampler->stop();
         delete sampler;
     }
-    
+
     sampler = new Sampler(device->getCurrentSampleRate(),device->getDefaultBufferSize());
     sampler->loadSample(model->getFile(table->getSelectedRow()));
     sampler->play();
@@ -182,6 +173,10 @@ Sampler* DBBrowser::getSampler() {
     return sampler;
 }
 
+void DBBrowser::textEditorTextChanged(TextEditor &t) {
+    model->filter(textEditor.get()->getText());
+    table->updateContent();
+}
 //[/MiscUserCode]
 
 
@@ -195,16 +190,17 @@ Sampler* DBBrowser::getSampler() {
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="DBBrowser" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="450" initialHeight="600">
+                 parentClasses="public Component, public TextEditor::Listener"
+                 constructorParams="" variableInitialisers="" snapPixels="8" snapActive="1"
+                 snapShown="1" overlayOpacity="0.330" fixedSize="0" initialWidth="450"
+                 initialHeight="600">
   <BACKGROUND backgroundColour="ff323e44"/>
   <TEXTEDITOR name="new text editor" id="806cd18d3537f2c2" memberName="textEditor"
               virtualName="" explicitFocusOrder="0" pos="16 8 320 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
               caret="1" popupmenu="1"/>
   <VIEWPORT name="new viewport" id="4bbf170e84583707" memberName="viewport"
-            virtualName="" explicitFocusOrder="0" pos="16 48 98.012% 98.004%"
+            virtualName="" explicitFocusOrder="0" pos="16 48 97.998% 97.965%"
             vscroll="1" hscroll="1" scrollbarThickness="8" contentType="0"
             jucerFile="" contentClass="TableListBox" constructorParams=""/>
   <TEXTBUTTON name="updateButton" id="176f55b593519c44" memberName="updateButton"

@@ -23,6 +23,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ExtendedFileBrowser.h"
 #include "CustomLookAndFeel.h"
+#include "LCDisplay.h"
 //[/Headers]
 
 
@@ -99,9 +100,9 @@ private:
     std::unique_ptr<ImageButton> playButton;
     std::unique_ptr<ImageButton> forwardButton;
     std::unique_ptr<ImageButton> nextButton;
-    std::unique_ptr<Label> timeLabel;
     std::unique_ptr<Slider> vuMeterLeft;
     std::unique_ptr<Slider> vuMeterRight;
+    std::unique_ptr<LCDisplay> lcdisplay;
 
 
     //==============================================================================
