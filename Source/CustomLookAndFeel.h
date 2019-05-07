@@ -78,6 +78,8 @@ public:
                                                  float     rotaryStartAngle,
                                                  float     rotaryEndAngle,
                               Slider &     slider ) override;
+    
+    void drawDocumentWindowTitleBar (DocumentWindow&, Graphics&, int, int, int, int, const Image*, bool) override;
 private:
     juce::ColourGradient gradientVertical;
     juce::ColourGradient gradientHorizontal;

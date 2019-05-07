@@ -168,11 +168,15 @@ public:
 
     virtual void textEditorTextChanged (TextEditor& t) override;
     Sampler* getSampler();
+    void mouseDown(const juce::MouseEvent &event);
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
     void buttonClicked (Button* buttonThatWasClicked) override;
+
+        
+        
 
 
 

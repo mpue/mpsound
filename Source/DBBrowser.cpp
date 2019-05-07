@@ -42,7 +42,7 @@ DBBrowser::DBBrowser ()
     textEditor->setPopupMenuEnabled (true);
     textEditor->setText (String());
 
-    textEditor->setBounds (16, 8, 320, 24);
+    textEditor->setBounds (5, 8, 320, 24);
 
     viewport.reset (new Viewport ("new viewport"));
     addAndMakeVisible (viewport.get());
@@ -52,7 +52,7 @@ DBBrowser::DBBrowser ()
     updateButton->setButtonText (TRANS("Update DB"));
     updateButton->addListener (this);
 
-    updateButton->setBounds (352, 8, 100, 24);
+    updateButton->setBounds (340, 8, 90, 24);
 
 
     //[UserPreSize]
@@ -72,7 +72,7 @@ DBBrowser::DBBrowser ()
     table->setModel(model);
     table->addMouseListener(this, true);
     viewport->setViewedComponent(table);
-    viewport->setTopLeftPosition(10,48);
+    viewport->setTopLeftPosition(0,48);
     repaint();
     resized();
     model->loadData();
@@ -98,13 +98,18 @@ DBBrowser::~DBBrowser()
     //[/Destructor]
 }
 
+void DBBrowser::mouseDown(const juce::MouseEvent &event) {
+    playSelectedFile();
+}
+
 //==============================================================================
 void DBBrowser::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colour (0xff323e44));
+    g.fillAll (Colour (0xff222222));
+    g.fillRect (getLocalBounds());
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -119,7 +124,7 @@ void DBBrowser::resized()
     }
 
     if (viewport != nullptr) {
-        viewport->setSize(getWidth() - 10, getHeight() - 64);
+        viewport->setSize(getWidth(), getHeight() - 48);
         if (table !=  nullptr) {
             table->setSize(viewport->getWidth(), viewport->getHeight());
         }
@@ -129,7 +134,7 @@ void DBBrowser::resized()
 
     //[/UserPreResize]
 
-    viewport->setBounds (16, 48, proportionOfWidth (0.9801f), proportionOfHeight (0.9800f));
+    viewport->setBounds (0, 48, proportionOfWidth (0.99f), proportionOfHeight (0.99f));
     //[UserResized] Add your own custom resize handling here..
 
     //[/UserResized]
